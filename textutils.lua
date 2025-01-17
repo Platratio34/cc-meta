@@ -1,6 +1,6 @@
 ---@meta
 
-textutils = { --- CC's text formating utility
+textutils = { --- CC's text formatting utility
     empty_json_array = {}, --- A table representing an empty JSON array, in order to distinguish it from an empty JSON object. The contents of this table should not be modified.
     json_null = {} ---A table representing the JSON null value. The contents of this table should not be modified.
 }
@@ -56,22 +56,22 @@ function textutils.pagedTabulate(...) end
 
 ---Convert a Lua object into a textual representation, suitable for saving in a file or pretty-printing.
 ---
----Options for serialisation.
+---Options for serialization.
 ---
 --- - `compact`: Do not emit indentation and other whitespace between terms.
 --- - `allow_repetitions`: Relax the check for recursive tables, allowing them to appear multiple times (as long as tables do not appear inside themselves).
 ---
 ---@param t any The object to serialize
----@param opts? table `{ compact? = boolean, allow_repetitions? = boolean }` Options for serialisation.
----@return string str The serialised representation
+---@param opts? table `{ compact? = boolean, allow_repetitions? = boolean }` Options for serialization.
+---@return string str The serialized representation
 function textutils.serialise(t, opts) end
 
----Converts a serialised string back into a reassembled Lua object.
+---Converts a serialized string back into a reassembled Lua object.
 ---
 ---This is mainly used together with `textutils.serialise`.
 ---
----@param s string The serialised string to deserialise.
----@return any|nil rt The deserialised object **OR** `nil` If the object could not be deserialised.
+---@param s string The serialized string to deserialize.
+---@return any|nil rt The deserialized object **OR** `nil` If the object could not be deserialized.
 function textutils.unserialise(s) end
 
 ---Returns a JSON representation of the given data.
@@ -87,7 +87,7 @@ function textutils.serialiseJSON(t, bNBTStyle) end
 ---
 ---This is largely intended for interacting with various functions from the commands API, though may also be used in making http requests.
 ---
----Options for serialisation.
+---Options for serialization.
 ---
 --- - `nbt_style`: Whether to produce NBT-style JSON (non-quoted keys) instead of standard JSON.
 --- - `unicode_strings`: Whether to treat strings as containing UTF-8 characters instead of using the default 8-bit character set.
@@ -95,11 +95,11 @@ function textutils.serialiseJSON(t, bNBTStyle) end
 ---
 ---
 ---@param t any The value to serialise. Like `textutils.serialise`, this should not contain recursive tables or functions.
----@param options? table `{ nbt_style? = boolean, unicode_strings? = boolean, allow_repetitions? = boolean }` Options for serialisation.
+---@param options? table `{ nbt_style? = boolean, unicode_strings? = boolean, allow_repetitions? = boolean }` Options for serialization.
 ---@return string str The JSON representation of the input.
 function textutils.serialiseJSON(t, options) end
 
----Converts a serialised JSON string back into a reassembled Lua object.
+---Converts a serialized JSON string back into a reassembled Lua object.
 ---
 ---This may be used with textutils.serializeJSON, or when communicating with command blocks or web APIs.
 ---
@@ -116,9 +116,9 @@ function textutils.serialiseJSON(t, options) end
 --- - `parse_empty_array`: When false, empty arrays will be parsed as a new table. By default (or when this value is `true`), they are parsed as `empty_json_array`.
 ---
 ---
----@param s string The serialised string to deserialise.
+---@param s string The serialized string to deserialize.
 ---@param options? table { nbt_style? = boolean, parse_null? = boolean, parse_empty_array? = boolean } Options which control how this JSON object is parsed.
----@return any|nil obj The deserialised object **OR** `nil` If the object could not be deserialised.
+---@return any|nil obj The deserialized object **OR** `nil` If the object could not be deserialized.
 ---@return string? error A message describing why the JSON string is invalid.
 function textutils.unserialiseJSON(s, options) end
 

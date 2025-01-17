@@ -24,7 +24,7 @@ function shell.run(...) end
 ---Exit the current shell.
 ---
 ---This does not terminate your program, it simply makes the shell terminate after your program has finished.
----If this is the toplevel shell, then the computer will be shutdown.
+---If this is the top level shell, then the computer will be shutdown.
 function shell.exit() end
 
 ---Return the current working directory.

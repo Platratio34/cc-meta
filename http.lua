@@ -67,7 +67,7 @@ function http.request(request) end
 ---If this returns `true`, one should also listen for `http_check` which will container further information about whether the URL is allowed or not.
 ---
 ---@param url string The URL to check.
----@return boolean valid If the URL was vaild (not nessiaryly allowed)
+---@return boolean valid If the URL was valid (not necessarily allowed)
 ---@return string? message A reason why this URL is not valid (for instance, if it is malformed, or blocked).
 function http.checkURLAsync(url) end
 
