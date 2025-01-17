@@ -1,8 +1,12 @@
-fs = {}
+---@meta
 
----Provides completion for a file or directory name, suitable for use with _G.read.
+fs = {} --- CC's filesystem module
+
+---Provides completion for a file or directory name, suitable for use with `_G.read`.
 ---
----When a directory is a possible candidate for completion, two entries are included - one with a trailing slash (indicating that entries within this directory exist) and one without it (meaning this entry is an immediate completion candidate). include_dirs can be set to false to only include those with a trailing slash.
+---When a directory is a possible candidate for completion, two entries are included - one with a trailing slash (indicating that entries within this directory exist) and one without it (meaning this entry is an immediate completion candidate).
+---`include_dirs` can be set to false to only include those with a trailing slash.
+---
 ---@param path string The path to complete.
 ---@param location string The location where paths are resolved from.
 ---@param include_files? boolean When `false`, only directories will be included in the returned list. Defaults to `true`
@@ -11,9 +15,11 @@ fs = {}
 ---@diagnostic disable-next-line: duplicate-set-field
 function fs.complete(path, location, include_files, include_dirs) return {} end
 
----Provides completion for a file or directory name, suitable for use with _G.read.
+---Provides completion for a file or directory name, suitable for use with `_G.read`.
 ---
----When a directory is a possible candidate for completion, two entries are included - one with a trailing slash (indicating that entries within this directory exist) and one without it (meaning this entry is an immediate completion candidate). include_dirs can be set to false to only include those with a trailing slash.
+---When a directory is a possible candidate for completion, two entries are included - one with a trailing slash (indicating that entries within this directory exist) and one without it (meaning this entry is an immediate completion candidate).
+---`include_dirs` can be set to false to only include those with a trailing slash.
+---
 ---@param path string The path to complete.
 ---@param location string The location where paths are resolved from.
 ---@param options table `{ include_dirs? = boolean, include_files? = boolean, include_hidden? = boolean }`
@@ -26,19 +32,21 @@ function fs.complete(path, location, options) return {} end
 ---
 ---This string looks like a normal path string, but can include wildcards, which can match multiple paths:
 ---
----"?" matches any single character in a file name.
----"*" matches any number of characters.
+--- - `"?"` matches any single character in a file name.
+--- - `"*"` matches any number of characters.
 ---
----For example, rom/*/command* will look for any path starting with command inside any subdirectory of /rom.
+---For example, `rom/*/command*` will look for any path starting with `command` inside any subdirectory of `/rom`.
 ---
----Note that these wildcards match a single segment of the path. For instance rom/*.lua will include rom/startup.lua but not include rom/programs/list.lua.
+---Note that these wildcards match a single segment of the path. For instance `rom/*.lua` will include `rom/startup.lua` but not include `rom/programs/list.lua.`
+---
 ---@param path string The wildcard-qualified path to search for.
 ---@return string[] paths A list of paths that match the search string.
 function fs.find(path) return {} end
 
----Returns true if a path is mounted to the parent filesystem.
+---Returns `true` if a path is mounted to the parent filesystem.
 ---
----The root filesystem "/" is considered a mount, along with disk folders and the rom folder.
+---The root filesystem `"/"` is considered a mount, along with disk folders and the rom folder.
+---
 ---@param path string The path to check.
 ---@return boolean mounted If the path is mounted, rather than a normal file/folder.
 function fs.isDriveRoot(path) return false end
@@ -91,6 +99,7 @@ function fs.makeDir(path) end
 ---Moves a file or directory from one path to another.
 ---
 ---Any parent directories are created as needed.
+---
 ---@param path string The file or directory to move.
 ---@param dest string The path to the destination file or directory.
 function fs.move(path, dest) end
@@ -98,6 +107,7 @@ function fs.move(path, dest) end
 ---Copies a file or directory to a new path.
 ---
 ---Any parent directories are created as needed.
+---
 ---@param path string The file or directory to copy.
 ---@param dest string The path to the destination file or directory.
 function fs.copy(path, dest) end
@@ -105,6 +115,7 @@ function fs.copy(path, dest) end
 ---Deletes a file or directory.
 ---
 ---If the path points to a directory, all of the enclosed files and subdirectories are also deleted.
+---
 ---@param path string The path to the file or directory to delete.
 function fs.delete(path) end
 
@@ -118,7 +129,9 @@ function fs.delete(path) end
 --- - `"r+"`: Update mode (allows reading and writing), all data is preserved.
 --- - `"w+"`: Update mode, all data is erased.
 ---
----The mode may also have a "b" at the end, which opens the file in "binary mode". This changes `fs.ReadHandle.read and fs.WriteHandle.write to read/write single bytes as numbers rather than strings.
+---The mode may also have a `"b"` at the end, which opens the file in "binary mode".
+---This changes `fs.ReadHandle.read and fs.WriteHandle.write to read/write single bytes as numbers rather than strings.
+---
 ---@param path string The path to the file to open.
 ---@param mode "r"|"w"|"a"|"r+"|"w+"|"rb"|"wb"|"ab"|"r+b"|"w+b" The path to the file to open.
 ---@return fs.ReadWriteHandle|fs.ReadHandle|fs.WriteHandle|nil handle A file handle object for the file. **OR** `nil` if the file does not exist, or cannot be opened.
@@ -144,7 +157,9 @@ function fs.getCapacity(path) return 0 end
 ---
 ---The returned attributes table contains information about the size of the file, whether it is a directory, when it was created and last modified, and whether it is read only.
 ---
----The creation and modification times are given as the number of milliseconds since the UNIX epoch. This may be given to os.date in order to convert it to more usable form.
+---The creation and modification times are given as the number of milliseconds since the UNIX epoch.
+---This may be given to os.date in order to convert it to more usable form.
+---
 ---@param path string The path to get attributes for.
 ---@return table attributes `{ size = number, isDir = boolean, isReadOnly = boolean, created = number, modified = number }` The resulting attributes.
 function fs.attributes(path) return {} end
@@ -153,10 +168,10 @@ function fs.attributes(path) return {} end
 --   CLASSES
 -- +++++++++++
 
----@class fs.ReadWriteHandle : fs.WriteHandle, fs.ReadHandle
+---@class fs.ReadWriteHandle : fs.WriteHandle, fs.ReadHandle  CC FS file read and write handle
 local ReadWriteHandle = {}
 
----@class fs.ReadHandle
+---@class fs.ReadHandle CC FS file read handle
 local ReadHandle = {}
 
 ---Read a number of bytes from this file.
@@ -165,21 +180,23 @@ local ReadHandle = {}
 function ReadHandle.read(count) return nil end
 
 ---Read the remainder of the file.
----@return string? file The remaining contents of the file, or nil in the event of an error.
-function ReadHandle.readAll() return nil end
+---@return string file The remaining contents of the file, or nil in the event of an error.
+function ReadHandle.readAll() end
 
 ---Read a line from the file.
 ---@param withTrailing? boolean Whether to include the newline characters with the returned string. Defaults to `false`.
 ---@return string? line The read line or `nil` if at the end of the file.
 function ReadHandle.readLine(withTrailing) return nil end
 
----Seek to a new position within the file, changing where bytes are written to. The new position is an offset given by `offset`, relative to a start position determined by `whence`:
+---Seek to a new position within the file, changing where bytes are written to.
+---The new position is an offset given by `offset`, relative to a start position determined by `whence`:
 ---
---- - `set`: offset is relative to the beginning of the file.
---- - `cur`: Relative to the current position. This is the default.
---- - `end`: Relative to the end of the file.
+--- - `"set"`: offset is relative to the beginning of the file.
+--- - `"cur"`: Relative to the current position. This is the default.
+--- - `"end"`: Relative to the end of the file.
 ---
 ---In case of success, seek returns the new file position from the beginning of the file.
+---
 ---@param whence? string Where the offset is relative to.
 ---@param offset? number The offset to seek to.
 ---@return number|nil position The new position **OR** `nil` on failure
@@ -191,16 +208,19 @@ function ReadHandle.seek(whence, offset) end
 ---Once a file is closed it may no longer be read or written to.
 function ReadWriteHandle.close() end
 
----@class fs.WriteHandle
+
+---@class fs.WriteHandle CC FS file write handle
 local WriteHandle = {}
 
----Seek to a new position within the file, changing where bytes are written to. The new position is an offset given by `offset`, relative to a start position determined by `whence`:
+---Seek to a new position within the file, changing where bytes are written to.
+---The new position is an offset given by `offset`, relative to a start position determined by `whence`:
 ---
---- - `set`: offset is relative to the beginning of the file.
---- - `cur`: Relative to the current position. This is the default.
---- - `end`: Relative to the end of the file.
+--- - `"set"`: offset is relative to the beginning of the file.
+--- - `"cur"`: Relative to the current position. This is the default.
+--- - `"end"`: Relative to the end of the file.
 ---
 ---In case of success, seek returns the new file position from the beginning of the file.
+---
 ---@param whence? string Where the offset is relative to.
 ---@param offset? number The offset to seek to.
 ---@return number|nil position The new position **OR** `nil` on failure
